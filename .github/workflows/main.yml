@@ -4,7 +4,7 @@ on:
     branches: [ main, staging, dev ]
 jobs:
   production-deploy:
-    if: github.ref == 'main'
+    if: ${{ github.ref }} == 'main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
             FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
             PROJECT_ID: ${{ secrets.PROJECT_ID }}
   staging-deploy:
-    if: github.ref == 'staging'
+    if: $ {{ github.ref }} == 'staging'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
