@@ -4,7 +4,7 @@ on:
     branches: [ main, staging, dev ]
 jobs:
   production-deploy:
-    if: ${GITHUB_REF##*/} == 'main'
+    if: github.ref == 'main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,10 +19,10 @@ jobs:
         with:
             args: deploy --only functions
         env:
-            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN  }}
-            PROJECT_ID: ${{ secrets.PROJECT_ID  }}
+            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+            PROJECT_ID: ${{ secrets.PROJECT_ID }}
   staging-deploy:
-    if: ${GITHUB_REF##*/} == 'staging'
+    if: github.ref == 'staging'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -37,5 +37,5 @@ jobs:
         with:
             args: deploy --only functions
         env:
-            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_STAGING  }}
-            PROJECT_ID: ${{ secrets.PROJECT_ID_STAGING  }}
+            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_STAGING }}
+            PROJECT_ID: ${{ secrets.PROJECT_ID_STAGING }}
