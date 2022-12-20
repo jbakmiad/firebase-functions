@@ -4,7 +4,7 @@ on:
     branches: [ main, staging, dev ]
 jobs:
   production-deploy:
-    if: ${{ github.head_ref }} == 'main' 
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
           cd functions
           npm install
       - name: Branch name
-        run: echo running on branch ${{ github.head_ref }}
+        run: echo running on branch ${GITHUB_REF##*/}
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
@@ -22,7 +22,7 @@ jobs:
             FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
             PROJECT_ID: ${{ secrets.PROJECT_ID }}
   staging-deploy:
-    if: ${{ github.head_ref }} == 'staging'
+    if: github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
           cd functions
           npm install
       - name: Branch name
-        run: echo running on branch ${{ github.head_ref }}
+        run: echo running on branch ${GITHUB_REF##*/}
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
