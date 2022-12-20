@@ -1,22 +1,40 @@
 name: Firebase function deploy
 on:
   push:
-    branches: [ main ]
+    branches: [ main, staging, dev ]
 jobs:
   build:
+    if: ${GITHUB_REF##*/} == 'main'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Intall npm packages
-      run: |
-        cd functions
-        npm install
-    - name: Branch name
-      run: echo running on branch ${GITHUB_REF##*/}
-    - name: Deploy to firebase
-      uses: w9jds/firebase-action@master
-      with:
-          args: deploy --only functions
-      env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN  }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID  }}
+      - uses: actions/checkout@v2
+      - name: Intall npm packages
+        run: |
+          cd functions
+          npm install
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+      - name: Deploy to firebase
+        uses: w9jds/firebase-action@master
+        with:
+            args: deploy --only functions
+        env:
+            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN  }}
+            PROJECT_ID: ${{ secrets.PROJECT_ID  }}
+    if: ${GITHUB_REF##*/} == 'staging'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Intall npm packages
+        run: |
+          cd functions
+          npm install
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+      - name: Deploy to firebase
+        uses: w9jds/firebase-action@master
+        with:
+            args: deploy --only functions
+        env:
+            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_STAGING  }}
+            PROJECT_ID: ${{ secrets.PROJECT_ID_STAGING  }}
