@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main, staging, dev ]
 jobs:
-  build:
+  production-deploy:
     if: ${GITHUB_REF##*/} == 'main'
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +21,7 @@ jobs:
         env:
             FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN  }}
             PROJECT_ID: ${{ secrets.PROJECT_ID  }}
+  staging-deploy:
     if: ${GITHUB_REF##*/} == 'staging'
     runs-on: ubuntu-latest
     steps:
