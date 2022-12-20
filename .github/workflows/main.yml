@@ -11,6 +11,8 @@ jobs:
       run: |
         cd functions
         npm install
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*/}
     - name: Deploy to firebase
       uses: w9jds/firebase-action@master
       with:
